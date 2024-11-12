@@ -4,6 +4,31 @@ let result = document.getElementById("result");
 let r = "rock";
 let p = "paper";
 let s = "scissors";
+const btnRock = document.querySelector("#rock");
+const btnPaper = document.querySelector("#paper");
+const btnScissors = document.querySelector("#scissors");
+const btnHolder = document.querySelector("#buttons");
+
+btnHolder.addEventListener("click", (event) => {
+    // store player's choice based on button pressed:
+    let target = event.target;
+    let playerChoice;
+
+    switch(target.id) {
+        case 'rock':
+            playerChoice = r;
+            break;
+        case 'paper':
+            playerChoice = p;
+            break;
+        case 'scissors':
+            playerChoice = s;
+            break;
+    }
+
+    // play a round:
+    playRound(getComputerChoice(), playerChoice);
+});
 
 function getComputerChoice() {
     let n = Math.floor(Math.random() * 3); // randomly returns one of 3 values: 0, 1, or 2
@@ -18,11 +43,12 @@ function getComputerChoice() {
     return computerHand;
 }
 
-function getHumanChoice() {
+// replaced with buttons:
+/* function getHumanChoice() {
     let choice = prompt("Rock, paper, or scissors?", "Rock");
     return choice;
 
-}
+} */
 
 function playRound(humanChoice,computerChoice) {
 // make case insensitive
@@ -75,14 +101,14 @@ console.log("Human score:" + humanScore + ". Computer score: " + computerScore +
 
 
 // play game of 5 rounds
-function playGame() {
+/* function playGame() {
     for (i=1;i<=5;i++) {
         playRound(getHumanChoice(), getComputerChoice());
         let roundsLeft = 5 - i;
         console.log(`${roundsLeft} rounds left!`)
     }
     (humanScore > computerScore) ? console.log("You won the game! Congrats!") : console.log("You lost. :(");
-}
+} */
 
-playGame();
+
 
