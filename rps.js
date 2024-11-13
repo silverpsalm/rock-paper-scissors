@@ -8,6 +8,7 @@ const btnRock = document.querySelector("#rock");
 const btnPaper = document.querySelector("#paper");
 const btnScissors = document.querySelector("#scissors");
 const btnHolder = document.querySelector("#buttons");
+const scoreHolder = document.querySelector("#score");
 
 btnHolder.addEventListener("click", (event) => {
     // store player's choice based on button pressed:
@@ -27,7 +28,7 @@ btnHolder.addEventListener("click", (event) => {
     }
 
     // play a round:
-    playRound(getComputerChoice(), playerChoice);
+    playRound(playerChoice, getComputerChoice());
 });
 
 function getComputerChoice() {
@@ -43,72 +44,72 @@ function getComputerChoice() {
     return computerHand;
 }
 
-// replaced with buttons:
-/* function getHumanChoice() {
-    let choice = prompt("Rock, paper, or scissors?", "Rock");
-    return choice;
-
-} */
-
 function playRound(humanChoice,computerChoice) {
-// make case insensitive
-let h = humanChoice.toLowerCase();
+let h = humanChoice;
 let c = computerChoice;
 let resultText = " ";
 //check winner, print who won
 if (h === c) {
-    resultText = "It's a tie!";
-    console.log(resultText);
-} 
+    resultText = "It's a tie!";} 
 else if (h === r) {
     if (c === p) {
         resultText = "You lose! Paper beats rock."
-        console.log(resultText);
         computerScore += 1;
     } else {
         resultText = "You win! Rock beats scissors."
-        console.log(resultText);
         humanScore += 1;
     }}
 else if (h === p) {
         if (c === r) {
             resultText = "You won! Paper beats rock."
-            console.log(resultText);
             humanScore += 1;
         } else { 
             resultText = "You lose! Scissors beats paper."
-            console.log(resultText);
             computerScore += 1;
         }
     }
 else {
     if (c === r) {
         resultText = "You lose! Rock beats scissors."
-        console.log(resultText);
         computerScore += 1;
     } else {
         resultText = "You win! Scissors beats paper."
-        console.log(resultText);
         humanScore += 1;
     }
 } 
 
-
+// Display results:
 result.textContent = resultText;
-console.log("Human score:" + humanScore + ". Computer score: " + computerScore + ".");
-   // update winner's score variable 
+scoreHolder.textContent = "Human score:" + humanScore + ". Computer score: " + computerScore + ".";
+
+if (humanScore === 5 || computerScore === 5) {
+    endGame();
+}
 }
 
 
-// play game of 5 rounds
-/* function playGame() {
-    for (i=1;i<=5;i++) {
-        playRound(getHumanChoice(), getComputerChoice());
-        let roundsLeft = 5 - i;
-        console.log(`${roundsLeft} rounds left!`)
-    }
-    (humanScore > computerScore) ? console.log("You won the game! Congrats!") : console.log("You lost. :(");
-} */
+// When someone gets 5 points:
+function endGame() {
+
+    let resetButton = document.createElement("button");
+    resetButton.textContent = "Play Again?";
+    resetButton.style.display = "block";
+
+    let winner = humanScore > computerScore ? 
+    result.textContent = "You won the game! Congratulations." : 
+    result.textContent = "You lost... =(";
+
+        //add reset button:
+        scoreHolder.appendChild(resetButton);
 
 
+    resetButton.addEventListener("click", () => {
+    // wipe scores:
+    scoreHolder.textContent = "";
+    result.textContent = "";
+    humanScore = 0;
+    computerScore = 0;
+    document.removeChild(resetButton);  
+    });
 
+}
